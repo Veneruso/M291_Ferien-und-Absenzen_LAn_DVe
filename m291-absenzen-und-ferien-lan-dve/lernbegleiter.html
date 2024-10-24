@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lernbegleiter Login</title>
+    <link rel="stylesheet" href="lernbegleiter.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="login-main">
+        <header>
+            <img src="assets/images/sbw-logo.svg" alt="SBW Logo" class="logo">
+        </header>
+
+        <main>
+            <h1>Login als Lernbegleiter</h1>
+
+            <label for="email">E-Mail:</label>
+            <input type="email" id="email" placeholder="Geben Sie Ihre E-Mail ein" required>
+
+            <label for="password">Passwort:</label>
+            <input type="password" id="password" placeholder="Geben Sie Ihr Passwort ein" required>
+
+            <button class="login-btn" id="weiterBtn" onclick="verifyLogin()">Weiter</button>
+
+            <a href="login.html" class="previous">&laquo; Zurück</a>
+        </main>
+    </div>
+
+    <script>
+        function verifyLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const correctEmail = "kingma@sbw-media.ch";
+            const correctPassword = "1234";
+
+            if (email === correctEmail && password === correctPassword) {
+                window.location.href = "absenzen-liste.html";
+            } else {
+                alert('Falsche E-Mail oder Passwort. Bitte versuchen Sie es erneut.');
+            }
+        }
+    </script>
+</body>
+</html>

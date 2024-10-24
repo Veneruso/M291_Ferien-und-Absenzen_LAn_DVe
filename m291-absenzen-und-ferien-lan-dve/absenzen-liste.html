@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absenzen Liste</title>
+    <link rel="stylesheet" href="absenzen-liste.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div>
+        <header>
+            <img src="assets/images/sbw-logo.svg" alt="SBW Logo" class="logo">
+        </header>
+
+        <main id="absenzenListeApp">
+            <h1>Absenzen und Ferien Liste</h1>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Lernpartner Name</th>
+                        <th>Startdatum</th>
+                        <th>Startzeit</th>
+                        <th>Enddatum</th>
+                        <th>Endzeit</th>
+                        <th>Grund</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(absenz, index) in absenzen" :key="index" @click="deleteAbsenz(index)">
+                        <td>{{ absenz.name }}</td>
+                        <td>{{ absenz.startDatum }}</td>
+                        <td>{{ absenz.startZeit }}</td>
+                        <td>{{ absenz.endDatum }}</td>
+                        <td>{{ absenz.endZeit }}</td>
+                        <td>{{ absenz.grund }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a href="login.html" class="previous">&laquo; Zurück</a>
+        </main>
+    </div>
+
+    <script>
+        const absenzenListeApp = Vue.createApp({
+            data() {
+                return {
+                    absenzen: JSON.parse(localStorage.getItem('absenzen')) || []
+                }
+            },
+            methods: {
+                deleteAbsenz(index) {
+                  
+                    this.absenzen.splice(index, 1);
+                    localStorage.setItem('absenzen', JSON.stringify(this.absenzen));
+                }
+            }
+        }).mount('#absenzenListeApp');
+    </script>
+</body>
+</html>

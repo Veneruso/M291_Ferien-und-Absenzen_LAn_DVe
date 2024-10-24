@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login als Lernpartner</title>
+    <link rel="stylesheet" href="lernpartner.css">
+    
+</head>
+
+<body>
+    <div class="login-main">
+        <header>
+            <img src="assets/images/sbw-logo.svg" alt="SBW Logo" class="logo">
+        </header>
+
+        <main>
+            <h1>Login als Lernpartner</h1>
+
+            <label for="name">Vollständiger Name:</label>
+            <select id="name">
+                <option value="" disabled selected>Wählen Sie Ihren Namen</option>
+            </select>
+
+            <label for="id">Lernpartner ID:</label>
+            <input type="number" id="id" placeholder="Geben Sie Ihre ID ein" required>
+
+            <button class="login-btn" id="weiterBtn" onclick="verifyLogin()">Weiter</button>
+
+            <a href="login.html" class="previous">&laquo; Zurück</a>
+
+            <div id="actions" style="display:none;">
+                <button class="login-btn" onclick="window.location.href='absenz-anmelden.html'">Absenz anmelden</button>
+                <button class="login-btn" onclick="window.location.href='ferien-ansprueche.html'">Ferienansprüche
+                    ansehen</button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const select = document.getElementById('name');
+        const idInput = document.getElementById('id');
+        select.addEventListener('change', () => {
+            idInput.value = select.value;
+        })
+
+        fetch('https://api-sbw-plc.sbw.media/Student[0,78]')
+            .then(response => response.json())
+            .then(data => {
+
+                data.resources.forEach(student => {
+                    const option = document.createElement('option');
+                    option.value = student.id;
+                    option.text = `${student.firstname} ${student.name}`;
+                    select.add(option);
+                });
+            });
+
+        function verifyLogin() {
+            const name = document.getElementById('name').selectedOptions[0].text;
+            const id = document.getElementById('id').value;
+
+            if (name && id) {
+                localStorage.setItem('lernpartnerName', name);
+                localStorage.setItem('lernpartnerId', id);
+
+                document.getElementById('actions').style.display = 'block';
+                document.getElementById('weiterBtn').style.display = 'none';
+            } else {
+                alert('Bitte geben Sie sowohl Ihren Namen als auch Ihre ID ein.');
+            }
+        }
+    </script>
+</body>
+
+</html>
